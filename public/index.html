@@ -1,10 +1,412 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Lunar Kingdom</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lunar Kingdom — Le Royaume Lunaire</title>
+<meta name="description" content="Communauté du Royaume Lunaire. Là où les ombres règnent et les pactes se scellent à la lueur des étoiles.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void: #06040c;
+  --void-2: #0c0817;
+  --void-3: #14102a;
+  --silver: #d6d2e8;
+  --silver-dim: #9a96b3;
+  --purple: #8957c4;
+  --purple-deep: #5a3d7a;
+  --purple-glow: rgba(137, 87, 196, 0.4);
+  --blood: #b85271;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  background: var(--void);
+  color: var(--silver);
+  font-family: 'Cormorant Garamond', serif;
+  overflow-x: hidden;
+}
+
+/* Vignette overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 0%, transparent 55%, rgba(0,0,0,0.7) 100%);
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* ---------- STARFIELD ---------- */
+.starfield { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+
+.stars {
+  position: absolute;
+  inset: -100% -100%;
+  background-image: 
+    radial-gradient(1px 1px at 20% 30%, var(--silver) 50%, transparent),
+    radial-gradient(1px 1px at 60% 70%, var(--silver) 50%, transparent),
+    radial-gradient(1.5px 1.5px at 80% 10%, white 50%, transparent),
+    radial-gradient(1px 1px at 15% 80%, var(--silver) 50%, transparent),
+    radial-gradient(1px 1px at 90% 50%, var(--silver) 50%, transparent),
+    radial-gradient(1.5px 1.5px at 35% 50%, white 50%, transparent),
+    radial-gradient(1px 1px at 70% 30%, var(--silver) 50%, transparent),
+    radial-gradient(1px 1px at 50% 90%, var(--silver) 50%, transparent),
+    radial-gradient(1px 1px at 25% 15%, var(--silver) 50%, transparent),
+    radial-gradient(1.5px 1.5px at 95% 75%, white 50%, transparent);
+  background-size: 300px 300px;
+  background-repeat: repeat;
+  opacity: 0.7;
+  animation: drift 120s linear infinite;
+}
+.stars-2 { background-size: 500px 500px; opacity: 0.4; animation: drift 200s linear infinite reverse, twinkle-a 4s ease-in-out infinite; }
+.stars-3 { background-size: 700px 700px; opacity: 0.6; animation: drift 300s linear infinite, twinkle-b 6s ease-in-out infinite; }
+
+@keyframes drift { from { transform: translate(0, 0); } to { transform: translate(-300px, -300px); } }
+@keyframes twinkle-a { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.85; } }
+@keyframes twinkle-b { 0%, 100% { opacity: 0.6; } 50% { opacity: 0.2; } }
+
+/* ---------- NEBULA ---------- */
+.nebula {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: 
+    radial-gradient(ellipse 60% 40% at 20% 30%, rgba(137, 87, 196, 0.18), transparent 60%),
+    radial-gradient(ellipse 50% 50% at 80% 70%, rgba(90, 61, 122, 0.22), transparent 70%),
+    radial-gradient(ellipse 40% 60% at 50% 100%, rgba(184, 82, 113, 0.08), transparent 60%);
+  animation: nebula-shift 20s ease-in-out infinite alternate;
+}
+@keyframes nebula-shift {
+  from { transform: scale(1) rotate(0deg); opacity: 0.7; }
+  to   { transform: scale(1.1) rotate(2deg); opacity: 1; }
+}
+
+/* ---------- MOON ---------- */
+.moon-container {
+  position: fixed;
+  top: 12%;
+  right: -120px;
+  z-index: 1;
+  pointer-events: none;
+  animation: moon-float 8s ease-in-out infinite alternate;
+}
+@keyframes moon-float {
+  from { transform: translateY(0) translateX(0); }
+  to   { transform: translateY(-25px) translateX(-15px); }
+}
+.moon {
+  width: 380px; height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #f5f1ff 0%, #d6d2e8 30%, #9d96bd 70%, #5a3d7a 100%);
+  box-shadow: 
+    inset -30px -30px 80px rgba(20, 8, 50, 0.6),
+    0 0 80px rgba(214, 210, 232, 0.3),
+    0 0 200px rgba(137, 87, 196, 0.25);
+  position: relative;
+}
+.moon::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background-image: 
+    radial-gradient(circle at 25% 35%, rgba(40, 20, 70, 0.45) 0%, transparent 5%),
+    radial-gradient(circle at 60% 25%, rgba(40, 20, 70, 0.3) 0%, transparent 4%),
+    radial-gradient(circle at 45% 60%, rgba(40, 20, 70, 0.5) 0%, transparent 8%),
+    radial-gradient(circle at 70% 70%, rgba(40, 20, 70, 0.3) 0%, transparent 6%),
+    radial-gradient(circle at 30% 75%, rgba(40, 20, 70, 0.4) 0%, transparent 5%),
+    radial-gradient(circle at 80% 45%, rgba(40, 20, 70, 0.3) 0%, transparent 4%);
+}
+.moon-glow {
+  position: absolute; inset: -60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(214, 210, 232, 0.18) 0%, transparent 60%);
+  animation: glow-pulse 4s ease-in-out infinite;
+}
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%     { opacity: 1;   transform: scale(1.15); }
+}
+
+/* ---------- MAIN CONTENT ---------- */
+main {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem 6rem;
+  text-align: center;
+}
+
+.crest {
+  width: 90px; height: 90px;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: fade-in 1.2s 0.2s ease-out forwards;
+  filter: drop-shadow(0 0 12px rgba(137, 87, 196, 0.4));
+}
+
+.eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.55em;
+  color: var(--purple);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fade-in 1.2s 0.6s ease-out forwards;
+  padding-left: 0.55em; /* compensate letter-spacing */
+}
+
+h1 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.8rem, 9vw, 7rem);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  color: var(--silver);
+  margin-bottom: 1.8rem;
+  text-shadow: 
+    0 0 30px rgba(214, 210, 232, 0.35),
+    0 0 60px rgba(137, 87, 196, 0.25);
+  padding-left: 0.18em;
+}
+
+h1 .letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: letter-reveal 0.7s ease-out forwards;
+}
+@keyframes letter-reveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0 2rem;
+  opacity: 0;
+  animation: fade-in 1.2s 1.9s ease-out forwards;
+}
+.divider-line {
+  width: 70px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--purple), transparent);
+}
+.divider-symbol {
+  font-size: 1.1rem;
+  color: var(--purple);
+}
+
+.tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  color: var(--silver-dim);
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: fade-in 1.2s 2.1s ease-out forwards;
+  max-width: 620px;
+}
+
+.description {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  color: var(--silver-dim);
+  line-height: 1.7;
+  max-width: 540px;
+  margin-bottom: 3rem;
+  opacity: 0;
+  animation: fade-in 1.2s 2.4s ease-out forwards;
+}
+
+/* CTA */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--silver);
+  text-decoration: none;
+  padding: 1.2rem 2.5rem 1.2rem 2.8rem;
+  border: 1px solid var(--purple-deep);
+  background: rgba(20, 16, 42, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  animation: fade-in 1.2s 2.7s ease-out forwards;
+}
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent, var(--purple-glow), transparent);
+  transform: translateX(-110%);
+  transition: transform 0.7s ease;
+}
+.cta:hover {
+  border-color: var(--purple);
+  color: white;
+  letter-spacing: 0.32em;
+  box-shadow: 
+    0 0 40px rgba(137, 87, 196, 0.5),
+    inset 0 0 25px rgba(137, 87, 196, 0.15);
+}
+.cta:hover::before { transform: translateX(110%); }
+
+.cta-icon {
+  width: 18px; height: 18px;
+  fill: currentColor;
+}
+
+@keyframes fade-in { to { opacity: 1; } }
+
+/* ---------- FOOTER ---------- */
+footer {
+  position: fixed;
+  bottom: 1.8rem;
+  left: 0; right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2.8rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--silver-dim);
+  opacity: 0;
+  animation: fade-in 1.2s 3s ease-out forwards;
+}
+footer .status {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+footer .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--purple);
+  box-shadow: 0 0 12px var(--purple);
+  animation: pulse-dot 2.2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%     { opacity: 0.35; }
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .moon { width: 220px; height: 220px; }
+  .moon-container { top: 6%; right: -70px; }
+  .moon-glow { inset: -40px; }
+  footer {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    bottom: 1rem;
+    padding: 0 1rem;
+  }
+  .description { font-size: 1rem; }
+  .crest { width: 70px; height: 70px; margin-bottom: 2rem; }
+}
+</style>
 </head>
 <body>
-  <h1>Bienvenue dans le Royaume Lunaire</h1>
+
+<!-- Cosmic background layers -->
+<div class="starfield">
+  <div class="stars"></div>
+  <div class="stars stars-2"></div>
+  <div class="stars stars-3"></div>
+</div>
+<div class="nebula"></div>
+
+<!-- The moon -->
+<div class="moon-container">
+  <div class="moon-glow"></div>
+  <div class="moon"></div>
+</div>
+
+<main>
+  <!-- Heraldic crest -->
+  <svg class="crest" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="crestGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#e9e4f5"/>
+        <stop offset="100%" stop-color="#8957c4"/>
+      </linearGradient>
+    </defs>
+    <!-- Crown -->
+    <path d="M 28 22 L 32 10 L 38 20 L 50 6 L 62 20 L 68 10 L 72 22 L 70 28 L 30 28 Z"
+          fill="none" stroke="url(#crestGrad)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="32" cy="10" r="1.5" fill="#d6d2e8"/>
+    <circle cx="50" cy="6" r="1.8" fill="#d6d2e8"/>
+    <circle cx="68" cy="10" r="1.5" fill="#d6d2e8"/>
+    <!-- Crescent moon -->
+    <path d="M 50 36 a 22 22 0 1 0 0 44 a 17 17 0 1 1 0 -44"
+          fill="none" stroke="url(#crestGrad)" stroke-width="1.5"/>
+    <!-- Side stars -->
+    <circle cx="22" cy="55" r="1.2" fill="#d6d2e8"/>
+    <circle cx="78" cy="55" r="1.2" fill="#d6d2e8"/>
+    <circle cx="20" cy="68" r="0.8" fill="#9a96b3"/>
+    <circle cx="80" cy="68" r="0.8" fill="#9a96b3"/>
+    <!-- Bottom banner -->
+    <path d="M 25 88 L 50 92 L 75 88" fill="none" stroke="url(#crestGrad)" stroke-width="1"/>
+  </svg>
+
+  <div class="eyebrow">Anno Lunae · MMXXVI</div>
+
+  <h1>
+    <span class="letter" style="animation-delay:0.85s">L</span><span class="letter" style="animation-delay:0.92s">U</span><span class="letter" style="animation-delay:0.99s">N</span><span class="letter" style="animation-delay:1.06s">A</span><span class="letter" style="animation-delay:1.13s">R</span>
+    <span style="display:inline-block; width:0.5em;"></span>
+    <span class="letter" style="animation-delay:1.25s">K</span><span class="letter" style="animation-delay:1.32s">I</span><span class="letter" style="animation-delay:1.39s">N</span><span class="letter" style="animation-delay:1.46s">G</span><span class="letter" style="animation-delay:1.53s">D</span><span class="letter" style="animation-delay:1.60s">O</span><span class="letter" style="animation-delay:1.67s">M</span>
+  </h1>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-symbol">☾</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <p class="tagline">« Là où les ombres règnent et les pactes se scellent à la lueur des étoiles »</p>
+
+  <p class="description">
+    Une communauté forgée dans le silence des nuits sans fin.<br>
+    Franchissez les portes du Royaume Lunaire et joignez-vous à ceux
+    qui veillent sous les constellations.
+  </p>
+
+  <a href="https://discord.gg/votre-invitation" class="cta" target="_blank" rel="noopener">
+    <svg class="cta-icon" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+    Rejoindre le Royaume
+  </a>
+</main>
+
+<footer>
+  <div class="status">
+    <span class="dot"></span>
+    <span>Portail Actif</span>
+  </div>
+  <div>Sub Luna Regnum · MMXXVI</div>
+</footer>
+
 </body>
 </html>
