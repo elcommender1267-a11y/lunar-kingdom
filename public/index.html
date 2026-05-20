@@ -40,6 +40,12 @@ body {
   font-family: 'Cormorant Garamond', serif;
   overflow-x: hidden;
 }
+body {
+  background:
+    linear-gradient(180deg, #1f232b 0%, #2b313b 100%) !important;
+  color:#ffffff !important;
+}
+
 
 /* Vignette overlay */
 body::before {
@@ -260,7 +266,7 @@ h1 {
 .description, .section-intro {
   font-size: 1.12rem;
   line-height: 1.75;
-  color: var(--silver-dim);
+  color: #ffffff;
 }
 
 .description {
@@ -299,7 +305,7 @@ h1 {
 
 .cta.secondary {
   border-color: rgba(156, 108, 227, 0.55);
-  color: var(--silver-dim);
+  color: #ffffff;
 }
 
 .cta::before {
@@ -365,7 +371,7 @@ h2 {
 .realm-card p {
   font-size: 1.18rem;
   line-height: 1.8;
-  color: var(--silver-dim);
+  color: #ffffff;
 }
 
 .pillars {
@@ -390,7 +396,7 @@ h2 {
 }
 
 .pillar span {
-  color: var(--silver-dim);
+  color: #ffffff;
   line-height: 1.55;
 }
 
@@ -431,7 +437,7 @@ h2 {
 }
 
 .trade-card p {
-  color: var(--silver-dim);
+  color: #ffffff;
   font-size: 1.02rem;
   line-height: 1.55;
 }
@@ -482,7 +488,7 @@ h2 {
 }
 
 .staff-card p {
-  color: var(--silver-dim);
+  color: #ffffff;
   line-height: 1.55;
 }
 
@@ -521,7 +527,7 @@ h2 {
 }
 
 .rule p {
-  color: var(--silver-dim);
+  color: #ffffff;
   line-height: 1.55;
 }
 
@@ -556,7 +562,7 @@ h2 {
 }
 
 .step p {
-  color: var(--silver-dim);
+  color: #ffffff;
   line-height: 1.58;
 }
 
@@ -572,7 +578,7 @@ h2 {
 .oath p {
   max-width: 680px;
   margin: 0 auto 2rem;
-  color: var(--silver-dim);
+  color: #ffffff;
   font-size: 1.2rem;
   line-height: 1.75;
 }
@@ -670,11 +676,36 @@ section, .card, .panel {
 }
 
 p, li {
-  color: var(--silver-dim);
+  color: #ffffff;
 }
 
 h1, h2, h3, h4 {
   color: var(--silver);
+}
+
+
+body {
+  background:
+    linear-gradient(180deg, #e3e7ee 0%, #d3d9e3 100%);
+}
+
+/* soft texture */
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.18), transparent 30%),
+    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.12), transparent 35%),
+    radial-gradient(circle at 50% 80%, rgba(255,255,255,0.08), transparent 40%);
+  pointer-events:none;
+  z-index:0;
+}
+
+.starfield,
+.nebula,
+.moon-container{
+  display:none !important;
 }
 
 </style>
@@ -917,3 +948,79 @@ document.querySelectorAll('.reveal').forEach((element) => observer.observe(eleme
 
 </body>
 </html>
+
+<style>
+section,
+.card,
+.panel,
+.cta{
+  background: rgba(255,255,255,0.10) !important;
+  border: 1px solid rgba(255,255,255,0.18) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+h1,h2,h3,h4,p,li,a,span{
+  color:#ffffff !important;
+}
+
+footer{
+  color:#ffffff !important;
+}
+
+.divider-line{
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.7), transparent);
+}
+
+.cta:hover{
+  background: rgba(255,255,255,0.18) !important;
+}
+</style>
+
+<style>
+body::before,
+body::after{
+  display:none !important;
+}
+
+section,
+.card,
+.panel{
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.10) !important;
+  backdrop-filter: blur(6px);
+}
+
+h1,h2,h3,h4,h5,h6,
+p,
+li,
+a,
+span,
+.description,
+.tagline,
+footer{
+  color:#ffffff !important;
+}
+
+.description,
+.tagline,
+li,
+p{
+  opacity:0.95;
+}
+
+.cta{
+  background:#ffffff !important;
+  color:#1f232b !important;
+  border:none !important;
+  font-weight:700;
+}
+
+.cta:hover{
+  background:#e9edf5 !important;
+  color:#111 !important;
+}
+
+.divider-line{
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.8), transparent) !important;
+}
+</style>
